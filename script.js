@@ -1,96 +1,151 @@
 // --- CONFIGURATION ---
-// Replace with your actual Cloudflare Calls App ID from Phase 2
-const CLOUDFLARE_APP_ID = "YOUR_CLOUDFLARE_APP_ID_HERE"; 
+const CLOUDFLARE_APP_ID = "371197fd-f759-4d31-9f8c-43a451fc0d38"; // Your App ID
+const FREE_TIER_LIMIT_SECONDS = 3600; // 1 Hour
 
-// --- DOM ELEMENTS ---
-const localVideo = document.getElementById('local-video');
-const remoteVideosContainer = document.getElementById('remote-videos-container');
-const btnMic = document.getElementById('btn-mic');
-const btnCam = document.getElementById('btn-cam');
-const btnLeave = document.getElementById('btn-leave');
+// --- PAGE DETECTION ---
+// Check which page we are on to run the correct logic
+const currentPage = window.location.pathname.split('/').pop();
 
-let localStream = null;
-let peerConnection = null;
+if (currentPage === 'index.html' || currentPage === '' || currentPage === '/') {
+    initLandingPage();
+} else if (currentPage === 'live.html') {
+    initLiveRoom();
+}
 
-// --- INITIALIZATION ---
-async function init() {
-    try {
-        // 1. Get user's camera and microphone
-        localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-        localVideo.srcObject = localStream;
+// ==========================================
+// 1. LANDING PAGE LOGIC (index.html)
+// ==========================================
+function initLandingPage() {
+    const startBtn = document.getElementById('start-room-btn');
+    const roomInput = document.getElementById('room-name-input');
 
-        // 2. Initialize Cloudflare Calls WebRTC connection
-        await setupCloudflareCalls();
-        
-    } catch (error) {
-        console.error("Error accessing media devices:", error);
-        alert("Could not access camera/microphone. Please check permissions.");
+    if(startBtn) {
+        startBtn.addEventListener('click', () => {
+            let roomName = roomInput.value.trim();
+            
+            // If empty, generate a unique Jitsi-style random name
+            if (!roomName) {
+                roomName = 'parsing-' + Math.random().toString(36).substring(2, 8) + '-' + Math.random().toString(36).substring(2, 8);
+            } else {
+                // Clean up the room name for URLs
+                roomName = roomName.toLowerCase().replace(/[^a-z0-9-]/g, '-');
+            }
+
+            // Redirect to the live room with the room name in the URL
+            window.location.href = `live.html?room=${roomName}`;
+        });
     }
 }
 
-// --- CLOUDFLARE CALLS SETUP ---
-async function setupCloudflareCalls() {
-    // Note: In a production app, you would use the official Cloudflare Calls SDK.
-    // This is a simplified conceptual implementation using standard RTCPeerConnection.
+// ==========================================
+// 2. LIVE ROOM LOGIC (live.html)
+// ==========================================
+function initLiveRoom() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const roomName = urlParams.get('room') || 'default-room';
     
-    const configuration = {
-        iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] // Cloudflare handles TURN via their API
-    };
+    console.log(`Joining room: ${roomName} using App ID: ${CLOUDFLARE_APP_ID}`);
 
-    peerConnection = new RTCPeerConnection(configuration);
+    // Start the 1-hour timer
+    startCountdownTimer();
 
-    // Add local tracks to the peer connection
-    localStream.getTracks().forEach(track => {
-        peerConnection.addTrack(track, localStream);
-    });
+    // Initialize WebRTC (Camera/Mic)
+    initWebRTC();
 
-    // Handle incoming tracks from other participants
-    peerConnection.ontrack = (event) => {
-        const remoteVideo = document.createElement('video');
-        remoteVideo.autoplay = true;
-        remoteVideo.playsinline = true;
-        remoteVideo.srcObject = event.streams[0];
+    // Setup UI Controls
+    setupControls();
+}
+
+// --- 1 HOUR TIMER LOGIC ---
+function startCountdownTimer() {
+    let timeLeft = FREE_TIER_LIMIT_SECONDS;
+    const timerDisplay = document.getElementById('countdown-timer');
+    const modal = document.getElementById('premium-modal');
+
+    const timerInterval = setInterval(() => {
+        timeLeft--;
         
-        const tile = document.createElement('div');
-        tile.className = 'video-tile';
-        tile.appendChild(remoteVideo);
-        
-        const nameTag = document.createElement('span');
-        nameTag.className = 'participant-name cream-text';
-        nameTag.innerText = 'Participant';
-        tile.appendChild(nameTag);
-        
-        remoteVideosContainer.appendChild(tile);
-    };
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
-    // Create an offer to send to Cloudflare Calls API
-    const offer = await peerConnection.createOffer();
-    await peerConnection.setLocalDescription(offer);
+        // Change color to Hot Pink when under 5 minutes
+        if (timeLeft <= 300) {
+            timerDisplay.style.color = '#F05090'; // Hot Pink
+        }
 
-    // TODO: Send this offer to your backend/Cloudflare Calls API endpoint 
-    // to get the answer and establish the SFU connection.
-    console.log("WebRTC Offer created. Ready to send to Cloudflare Calls API.");
+        // Time is up!
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            cutOffCall();
+        }
+    }, 1000);
+}
+
+function cutOffCall() {
+    // Stop all media tracks
+    if (window.localStream) {
+        window.localStream.getTracks().forEach(track => track.stop());
+    }
+    
+    // Show the Premium Paywall Modal
+    const modal = document.getElementById('premium-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+    }
+    
+    // Disable control buttons
+    document.querySelectorAll('.control-btn').forEach(btn => btn.disabled = true);
+}
+
+// --- WEBRTC SETUP ---
+async function initWebRTC() {
+    const localVideo = document.getElementById('local-video');
+    try {
+        // Get camera and microphone
+        window.localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        localVideo.srcObject = window.localStream;
+        
+        // Note: In a production environment, you would now use the Cloudflare Calls SDK 
+        // to connect this localStream to the SFU using the CLOUDFLARE_APP_ID.
+        console.log("Media acquired. Ready to connect to Cloudflare Calls SFU.");
+        
+    } catch (error) {
+        console.error("Error accessing media:", error);
+        alert("Could not access camera/microphone. Please check browser permissions.");
+    }
 }
 
 // --- UI CONTROLS ---
-btnMic.addEventListener('click', () => {
-    const isEnabled = localStream.getAudioTracks()[0].enabled;
-    localStream.getAudioTracks()[0].enabled = !isEnabled;
-    btnMic.classList.toggle('active');
-});
+function setupControls() {
+    const btnMic = document.getElementById('btn-mic');
+    const btnCam = document.getElementById('btn-cam');
+    const btnLeave = document.getElementById('btn-leave');
 
-btnCam.addEventListener('click', () => {
-    const isEnabled = localStream.getVideoTracks()[0].enabled;
-    localStream.getVideoTracks()[0].enabled = !isEnabled;
-    btnCam.classList.toggle('active');
-});
+    if(btnMic) {
+        btnMic.addEventListener('click', () => {
+            if(window.localStream) {
+                const isEnabled = window.localStream.getAudioTracks()[0].enabled;
+                window.localStream.getAudioTracks()[0].enabled = !isEnabled;
+                btnMic.classList.toggle('active');
+            }
+        });
+    }
 
-btnLeave.addEventListener('click', () => {
-    if(peerConnection) peerConnection.close();
-    if(localStream) localStream.getTracks().forEach(track => track.stop());
-    alert("You have left the call.");
-    window.location.reload();
-});
+    if(btnCam) {
+        btnCam.addEventListener('click', () => {
+            if(window.localStream) {
+                const isEnabled = window.localStream.getVideoTracks()[0].enabled;
+                window.localStream.getVideoTracks()[0].enabled = !isEnabled;
+                btnCam.classList.toggle('active');
+            }
+        });
+    }
 
-// Start the app
-init();
+    if(btnLeave) {
+        btnLeave.addEventListener('click', () => {
+            if(window.localStream) window.localStream.getTracks().forEach(track => track.stop());
+            window.location.href = 'index.html';
+        });
+    }
+}
