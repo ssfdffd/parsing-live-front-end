@@ -1,0 +1,91 @@
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Live Room - parsing.co.za</title>
+       <style>
+           body { font-family: system-ui, sans-serif; background: #121212; color: #fff; text-align: center; margin: 0; padding: 20px; }
+           video { width: 45%; max-width: 400px; margin: 10px; background: #000; border-radius: 8px; }
+           button { padding: 10px 20px; font-size: 16px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 5px; }
+       </style>
+   </head>
+   <body>
+       <h2>Live Room</h2>
+       <div id="videos">
+           <video id="localVideo" autoplay muted playsinline></video>
+       </div>
+       <button id="joinBtn">Join Room</button>
+
+       <script>
+           // --- CONFIGURATION ---
+           // Replace this with your actual deployed Cloudflare Worker URL
+           const BACKEND_WS_URL = "wss://parsing-live-backend.your-subdomain.workers.dev"; 
+           const ROOM_NAME = "main-lobby";
+           // ---------------------
+
+           const localVideo = document.getElementById('localVideo');
+           const videosDiv = document.getElementById('videos');
+           const joinBtn = document.getElementById('joinBtn');
+           let localStream;
+           let pc;
+           let ws;
+
+           joinBtn.onclick = async () => {
+               joinBtn.disabled = true;
+               joinBtn.innerText = "Connecting...";
+
+               try {
+                   // 1. Get local media
+                   localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                   localVideo.srcObject = localStream;
+
+                   // 2. Connect to Cloudflare Worker
+                   ws = new WebSocket(`${BACKEND_WS_URL}?room=${ROOM_NAME}`);
+                   
+                   pc = new RTCPeerConnection({
+                       iceServers: [{ urls: "stun:stun.l.google.com:19302" }] 
+                   });
+
+                   // 3. Add local tracks
+                   localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
+
+                   // 4. Handle remote tracks
+                   pc.ontrack = (event) => {
+                       const remoteVideo = document.createElement('video');
+                       remoteVideo.autoplay = true;
+                       remoteVideo.playsinline = true;
+                       remoteVideo.srcObject = event.streams[0];
+                       videosDiv.appendChild(remoteVideo);
+                   };
+
+                   // 5. Signaling
+                   ws.onopen = async () => {
+                       const offer = await pc.createOffer();
+                       await pc.setLocalDescription(offer);
+                       ws.send(JSON.stringify({ type: "offer", data: pc.localDescription }));
+                       joinBtn.innerText = "Connected!";
+                   };
+
+                   ws.onmessage = async (msg) => {
+                       const data = JSON.parse(msg.data);
+                       if (data.type === "answer") await pc.setRemoteDescription(data.data);
+                       else if (data.type === "ice") await pc.addIceCandidate(data.data);
+                   };
+
+                   pc.onicecandidate = (event) => {
+                       if (event.candidate) {
+                           ws.send(JSON.stringify({ type: "ice", data: event.candidate }));
+                       }
+                   };
+
+               } catch (err) {
+                   console.error("WebRTC Error:", err);
+                   alert("Failed to start. Ensure you allowed Camera/Mic permissions.");
+                   joinBtn.disabled = false;
+                   joinBtn.innerText = "Retry";
+               }
+           };
+       </script>
+   </body>
+   </html>
