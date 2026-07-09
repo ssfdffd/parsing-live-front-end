@@ -3,35 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parsing Live - WebRTC</title>
-    
-    <!-- FAVICON PLACEHOLDER: Replace 'YOUR_FAVICON.ico' with your actual file name -->
+    <title>Parsing™ Live - Secure Video Conferencing</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="obsidian-bg">
+<body class="obsidian-bg cream-text">
 
-    <header class="app-header">
-        <h1 class="cream-text">Parsing<span class="coral-pink-text">™</span> Live</h1>
+    <header class="main-header">
+        <h1 class="logo-text">Parsing<span class="coral-pink-text">™</span> Live</h1>
+        <nav>
+            <a href="docs.html" class="nav-link">Documentation</a>
+            <a href="#" class="nav-link premium-link">Go Premium</a>
+        </nav>
     </header>
 
-    <main class="video-grid-container">
-        <!-- Local Video -->
-        <div class="video-tile" id="local-video-tile">
-            <video id="local-video" autoplay muted playsinline></video>
-            <span class="participant-name cream-text">You</span>
+    <main class="hero-section">
+        <div class="hero-content">
+            <h2 class="hero-headline">Enterprise-grade video, <span class="coral-pink-text">simplified.</span></h2>
+            <p class="hero-subtext">Start a secure room instantly. Free for 1 hour. No downloads required.</p>
+            
+            <div class="room-creator-card graphite-bg">
+                <h3>Start a new room</h3>
+                <div class="input-group">
+                    <input type="text" id="room-name-input" placeholder="e.g., weekly-sync or leave blank for random" class="cream-text">
+                    <button id="start-room-btn" class="btn-primary">Start Room</button>
+                </div>
+                <p class="helper-text">Or join an existing room by entering its name above and clicking Start.</p>
+            </div>
         </div>
-        
-        <!-- Remote Videos will be injected here by JavaScript -->
-        <div id="remote-videos-container"></div>
-    </main>
 
-    <footer class="control-bar graphite-bg">
-        <button id="btn-mic" class="control-btn active" title="Toggle Microphone">🎤</button>
-        <button id="btn-cam" class="control-btn active" title="Toggle Camera">📹</button>
-        <button id="btn-leave" class="control-btn leave-btn" title="Leave Call">📞</button>
-    </footer>
+        <!-- Premium Upsell Banner using Pink Ramp Tint 50 -->
+        <div class="premium-banner">
+            <h4>Need more than 1 hour?</h4>
+            <p>Upgrade to Parsing™ Live Premium for unlimited meeting durations, HD streaming, and custom branding.</p>
+            <button class="btn-secondary">View Premium Plans</button>
+        </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
