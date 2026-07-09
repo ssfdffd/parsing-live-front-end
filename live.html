@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parsing™ Live - Room</title>
+    <!-- FAVICON PLACEHOLDER: Replace 'YOUR_FAVICON.ico' with your actual file name -->
+    <link rel="icon" type="image/x-icon" href="YOUR_FAVICON.ico">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="obsidian-bg cream-text">
+
+    <header class="live-header">
+        <h1 class="logo-text">Parsing<span class="coral-pink-text">™</span> Live</h1>
+        <div class="timer-container">
+            <span class="timer-label">Time Remaining:</span>
+            <span id="countdown-timer" class="timer-value">60:00</span>
+        </div>
+    </header>
+
+    <main class="video-grid-container">
+        <div class="video-tile" id="local-video-tile">
+            <video id="local-video" autoplay muted playsinline></video>
+            <span class="participant-name">You</span>
+        </div>
+        <div id="remote-videos-container"></div>
+    </main>
+
+    <footer class="control-bar graphite-bg">
+        <button id="btn-mic" class="control-btn active" title="Toggle Mic">🎤</button>
+        <button id="btn-cam" class="control-btn active" title="Toggle Cam">📹</button>
+        <button id="btn-leave" class="control-btn leave-btn" title="Leave">📞</button>
+    </footer>
+
+    <!-- Premium Paywall Modal (Hidden by default) -->
+    <div id="premium-modal" class="modal-overlay hidden">
+        <div class="modal-content graphite-bg">
+            <h2 class="coral-pink-text">Time's Up!</h2>
+            <p>Your 1-hour free session has ended. To continue this meeting or start unlimited sessions, please upgrade to Parsing™ Live Premium.</p>
+            <button class="btn-primary" onclick="window.location.href='index.html'">Upgrade to Premium</button>
+            <button class="btn-secondary" onclick="window.location.href='index.html'">Return to Home</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
