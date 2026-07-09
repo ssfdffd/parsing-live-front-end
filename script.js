@@ -115,6 +115,67 @@ async function initWebRTC() {
         alert("Could not access camera/microphone. Please check browser permissions.");
     }
 }
+// --- REPLACE THE OLD setupCloudflareCalls WITH THIS ---
+async function setupCloudflareCalls() {
+    const configuration = {
+        iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+    };
+
+    window.peerConnection = new RTCPeerConnection(configuration);
+
+    // Add local camera/mic tracks to the connection
+    window.localStream.getTracks().forEach(track => {
+        window.peerConnection.addTrack(track, window.localStream);
+    });
+
+    // Handle incoming video/audio from other participants
+    window.peerConnection.ontrack = (event) => {
+        const remoteVideo = document.createElement('video');
+        remoteVideo.autoplay = true;
+        remoteVideo.playsinline = true;
+        remoteVideo.srcObject = event.streams[0];
+        
+        const tile = document.createElement('div');
+        tile.className = 'video-tile';
+        tile.appendChild(remoteVideo);
+        
+        const nameTag = document.createElement('span');
+        nameTag.className = 'participant-name cream-text';
+        nameTag.innerText = 'Participant';
+        tile.appendChild(nameTag);
+        
+        document.getElementById('remote-videos-container').appendChild(tile);
+    };
+
+    // Create the WebRTC Offer
+    const offer = await window.peerConnection.createOffer();
+    await window.peerConnection.setLocalDescription(offer);
+
+    // --- THE NEW CONNECTION TO YOUR CLOUDFLARE WORKER ---
+    // Replace the URL below with the exact Worker URL you copied in Phase 2!
+    const WORKER_URL = "https://parsing-live-backend.YOUR_SUBDOMAIN.workers.dev"; 
+
+    try {
+        const response = await fetch(WORKER_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ offerSdp: offer.sdp })
+        });
+
+        const data = await response.json();
+        
+        // Apply the Answer from Cloudflare to complete the connection
+        await window.peerConnection.setRemoteDescription({
+            type: "answer",
+            sdp: data.answerSdp
+        });
+        
+        console.log("Successfully connected to Cloudflare Calls SFU!");
+    } catch (error) {
+        console.error("Failed to connect to backend:", error);
+        alert("Could not connect to the video server. Please check your backend Worker URL.");
+    }
+}
 
 // --- UI CONTROLS ---
 function setupControls() {
