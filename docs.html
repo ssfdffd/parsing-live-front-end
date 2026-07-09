@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parsing™ Live - API & Embed Documentation</title>
+    <!-- FAVICON PLACEHOLDER: Replace 'YOUR_FAVICON.ico' with your actual file name -->
+    <link rel="icon" type="image/x-icon" href="YOUR_FAVICON.ico">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="cream-bg obsidian-text">
+
+    <header class="docs-header">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        <h1>Parsing™ Live <span class="coral-pink-text">Documentation</span></h1>
+    </header>
+
+    <main class="docs-content">
+        <section class="doc-section">
+            <h2>Embedding Parsing™ Live on your website</h2>
+            <p>You can easily embed our secure video rooms directly into your own website, intranet, or client portal using a simple HTML iframe.</p>
+            
+            <h3>Step 1: Choose your room</h3>
+            <p>Decide on a unique room name for your integration (e.g., <code>client-consultation</code>).</p>
+
+            <h3>Step 2: Copy the Embed Code</h3>
+            <p>Use the following code snippet. Replace <code>YOUR_ROOM_NAME</code> with your chosen room name.</p>
+            
+            <div class="code-block">
+                <code>
+&lt;iframe <br>
+&nbsp;&nbsp;src="https://live.parsing.co.za/live.html?room=YOUR_ROOM_NAME" <br>
+&nbsp;&nbsp;width="100%" <br>
+&nbsp;&nbsp;height="600px" <br>
+&nbsp;&nbsp;style="border: 2px solid #F07080; border-radius: 12px;" <br>
+&nbsp;&nbsp;allow="camera; microphone; display-capture" <br>
+&nbsp;&nbsp;title="Parsing Live WebRTC"&gt;<br>
+&lt;/iframe&gt;
+                </code>
+            </div>
+
+            <h3>Important Notes</h3>
+            <ul>
+                <li>The <code>allow="camera; microphone"</code> attribute is strictly required for the browser to grant access.</li>
+                <li>Free embedded rooms are subject to the 1-hour time limit.</li>
+                <li>For white-label solutions without the Parsing branding, please contact our sales team for Premium access.</li>
+            </ul>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
