@@ -1,114 +1,138 @@
 /* --- PARSING BRAND COLOUR SCHEME --- */
 :root {
-    --obsidian: #0A0A0A;   /* Primary background */
-    --graphite: #404040;   /* Secondary surfaces, controls */
-    --hot-pink: #F05090;   /* Hover states, strong accents */
-    --coral-pink: #F07080; /* Primary brand colour, active buttons */
-    --cream: #F0F0E0;      /* Text, warm white */
+    /* Core Palette */
+    --obsidian: #0A0A0A;
+    --graphite: #404040;
+    --hot-pink: #F05090;
+    --coral-pink: #F07080;
+    --cream: #F0F0E0;
+    
+    /* Extended Palette (Pink Ramp & Neutrals) */
+    --tint-50: #FCE8ED;   /* Blush subtle */
+    --shade-600: #D03060; /* Darker emphasis */
+    --warm-gray: #8A8A80; /* Mid-tone neutral */
 }
 
-/* --- BASE STYLES --- */
+/* --- BASE & UTILITIES --- */
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+body { min-height: 100vh; display: flex; flex-direction: column; }
 
-.obsidian-bg { background-color: var(--obsidian); }
-.graphite-bg { background-color: var(--graphite); }
+.obsidian-bg { background-color: var(--obsidian); color: var(--cream); }
+.cream-bg { background-color: var(--cream); color: var(--obsidian); }
+.graphite-bg { background-color: var(--graphite); color: var(--cream); }
 .cream-text { color: var(--cream); }
+.obsidian-text { color: var(--obsidian); }
 .coral-pink-text { color: var(--coral-pink); }
 
-body {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    color: var(--cream);
+/* --- BUTTONS --- */
+.btn-primary {
+    background-color: var(--coral-pink); color: var(--obsidian);
+    border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600;
+    cursor: pointer; transition: background 0.2s;
 }
+.btn-primary:hover { background-color: var(--hot-pink); color: var(--cream); }
 
-/* --- HEADER --- */
-.app-header {
-    padding: 15px 20px;
-    background-color: var(--obsidian);
-    border-bottom: 2px solid var(--coral-pink);
+.btn-secondary {
+    background-color: transparent; color: var(--coral-pink);
+    border: 2px solid var(--coral-pink); padding: 10px 22px; border-radius: 8px; 
+    font-weight: 600; cursor: pointer; transition: all 0.2s;
 }
-.app-header h1 { font-size: 1.5rem; font-weight: 600; }
+.btn-secondary:hover { background-color: var(--coral-pink); color: var(--obsidian); }
 
-/* --- VIDEO GRID --- */
+/* --- HEADER & NAV --- */
+.main-header, .live-header, .docs-header {
+    padding: 20px 40px; display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--graphite);
+}
+.docs-header { border-bottom: 1px solid var(--warm-gray); }
+.logo-text { font-size: 1.5rem; font-weight: 700; }
+.nav-link { color: var(--cream); text-decoration: none; margin-left: 20px; font-weight: 500; }
+.nav-link:hover { color: var(--hot-pink); }
+.premium-link { color: var(--coral-pink); font-weight: 600; }
+.back-link { color: var(--obsidian); text-decoration: none; font-weight: 600; }
+
+/* --- INDEX.HTML (LANDING) STYLES --- */
+.hero-section { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
+.hero-content { text-align: center; max-width: 600px; margin-bottom: 40px; }
+.hero-headline { font-size: 2.5rem; margin-bottom: 15px; }
+.hero-subtext { font-size: 1.1rem; color: var(--warm-gray); margin-bottom: 30px; }
+
+.room-creator-card {
+    padding: 30px; border-radius: 16px; text-align: left;
+    border: 1px solid var(--graphite); max-width: 500px; width: 100%;
+}
+.room-creator-card h3 { margin-bottom: 20px; }
+.input-group { display: flex; gap: 10px; margin-bottom: 15px; }
+.input-group input {
+    flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--warm-gray);
+    background: var(--obsidian); color: var(--cream); font-size: 1rem;
+}
+.helper-text { font-size: 0.85rem; color: var(--warm-gray); }
+
+/* Premium Banner using Tint 50 (Blush subtle) */
+.premium-banner {
+    background-color: var(--tint-50); color: var(--obsidian);
+    padding: 30px; border-radius: 16px; max-width: 500px; width: 100%; text-align: center;
+}
+.premium-banner h4 { color: var(--shade-600); margin-bottom: 10px; font-size: 1.2rem; }
+.premium-banner p { margin-bottom: 20px; color: var(--graphite); }
+
+/* --- LIVE.HTML (VIDEO ROOM) STYLES --- */
+.timer-container { display: flex; align-items: center; gap: 10px; }
+.timer-label { font-size: 0.9rem; color: var(--warm-gray); }
+.timer-value { font-family: monospace; font-size: 1.2rem; font-weight: 700; color: var(--coral-pink); }
+
 .video-grid-container {
-    flex: 1;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 20px;
-    overflow-y: auto;
-    justify-content: center;
-    align-content: center;
+    flex: 1; display: flex; flex-wrap: wrap; gap: 10px; padding: 20px;
+    overflow-y: auto; justify-content: center; align-content: center;
 }
-
 .video-tile {
-    position: relative;
-    width: 400px;
-    height: 250px;
-    background-color: var(--graphite);
-    border-radius: 12px;
-    overflow: hidden;
-    border: 2px solid transparent;
-    transition: border-color 0.3s;
+    position: relative; width: 400px; height: 250px; background-color: var(--graphite);
+    border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: border-color 0.3s;
 }
-
 .video-tile:hover { border-color: var(--hot-pink); }
-
-.video-tile video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
+.video-tile video { width: 100%; height: 100%; object-fit: cover; }
 .participant-name {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background-color: rgba(10, 10, 10, 0.7); /* Obsidian with opacity */
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 0.85rem;
+    position: absolute; bottom: 10px; left: 10px; background: rgba(10,10,10,0.8);
+    padding: 4px 10px; border-radius: 6px; font-size: 0.85rem; color: var(--cream);
 }
 
-/* --- CONTROL BAR --- */
 .control-bar {
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+    padding: 20px; display: flex; justify-content: center; gap: 20px;
     border-top: 1px solid var(--graphite);
 }
-
 .control-btn {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    background-color: var(--graphite);
-    color: var(--cream);
-    transition: all 0.2s ease;
+    width: 60px; height: 60px; border-radius: 50%; border: none; font-size: 1.5rem;
+    cursor: pointer; background-color: var(--graphite); color: var(--cream); transition: all 0.2s;
 }
+.control-btn.active { background-color: var(--coral-pink); color: var(--obsidian); }
+.control-btn:hover { background-color: var(--hot-pink); color: var(--cream); transform: scale(1.05); }
+.leave-btn { background-color: var(--shade-600); }
 
-/* Active state uses Coral Pink (Primary brand colour) */
-.control-btn.active {
-    background-color: var(--coral-pink);
-    color: var(--obsidian);
+/* Modal for Paywall */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(10,10,10,0.85); display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
 }
+.modal-overlay.hidden { display: none; }
+.modal-content {
+    padding: 40px; border-radius: 16px; text-align: center; max-width: 400px;
+    border: 2px solid var(--coral-pink);
+}
+.modal-content h2 { margin-bottom: 15px; }
+.modal-content p { margin-bottom: 25px; color: var(--warm-gray); }
+.modal-content button { margin: 5px; }
 
-/* Hover state uses Hot Pink (Reserve for hover states) */
-.control-btn:hover {
-    background-color: var(--hot-pink);
-    color: var(--cream);
-    transform: scale(1.05);
+/* --- DOCS.HTML STYLES --- */
+.docs-content { flex: 1; padding: 40px; max-width: 800px; margin: 0 auto; }
+.doc-section { margin-bottom: 40px; }
+.doc-section h2 { margin-bottom: 20px; font-size: 1.8rem; }
+.doc-section h3 { margin: 20px 0 10px; color: var(--shade-600); }
+.doc-section p, .doc-section li { line-height: 1.6; margin-bottom: 10px; }
+.doc-section code { background: var(--obsidian); color: var(--coral-pink); padding: 2px 6px; border-radius: 4px; }
+.code-block {
+    background: var(--obsidian); color: var(--cream); padding: 20px; border-radius: 8px;
+    overflow-x: auto; border-left: 4px solid var(--coral-pink); margin: 15px 0;
 }
-
-/* Leave button specific styling */
-.leave-btn {
-    background-color: #D03060; /* Pink ramp Shade 600 for emphasis */
-}
-.leave-btn:hover {
-    background-color: var(--hot-pink);
-}
+.code-block code { background: transparent; color: var(--cream); font-size: 0.9rem; }
