@@ -1,35 +1,47 @@
-/* --- PARSING BRAND COLOUR SCHEME --- */
+/* --- PARSING BRAND COLOUR SCHEME (From Official Guide) --- */
 :root {
     /* Core Palette */
-    --obsidian: #0A0A0A;
-    --graphite: #404040;
-    --hot-pink: #F05090;
-    --coral-pink: #F07080;
-    --cream: #F0F0E0;
-    
-    /* Extended Palette (Pink Ramp & Neutrals) */
-    --tint-50: #FCE8ED;   /* Blush subtle */
-    --shade-600: #D03060; /* Darker emphasis */
-    --warm-gray: #8A8A80; /* Mid-tone neutral */
+    --obsidian: #0A0A0A;   /* Primary background */
+    --graphite: #404040;   /* Secondary surfaces, muted UI */
+    --hot-pink: #F05090;   /* Strong accents, hover states, urgent CTAs */
+    --coral-pink: #F07080; /* Primary brand colour, base gradient */
+    --cream: #F0F0E0;      /* Wordmark text, warm white */
+
+    /* Extended Palette: Pink Ramp */
+    --tint-50: #FCE8ED;    /* Blush subtle (banners, chips) */
+    --tint-100: #F8C8D4;
+    --tint-200: #F4A0B8;
+    --shade-600: #D03060;  /* Darker emphasis */
+    --shade-800: #9E1B45;
+    --shade-900: #7A1035;
+
+    /* Extended Palette: Neutral Ramp (Bridging Cream and Obsidian) */
+    --sand: #D0C8B8;
+    --warm-gray: #8A8A80;  /* Placeholder text, borders */
+    --stone: #606058;
+    --slate: #303030;
 }
 
 /* --- BASE & UTILITIES --- */
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
 body { min-height: 100vh; display: flex; flex-direction: column; }
 
+/* Core Backgrounds & Text (Dark Page Pairing) */
 .obsidian-bg { background-color: var(--obsidian); color: var(--cream); }
 .cream-bg { background-color: var(--cream); color: var(--obsidian); }
 .graphite-bg { background-color: var(--graphite); color: var(--cream); }
 .cream-text { color: var(--cream); }
 .obsidian-text { color: var(--obsidian); }
 .coral-pink-text { color: var(--coral-pink); }
+.hot-pink-text { color: var(--hot-pink); }
 
-/* --- BUTTONS --- */
+/* --- BUTTONS (Highlight Pairing) --- */
 .btn-primary {
     background-color: var(--coral-pink); color: var(--obsidian);
     border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600;
-    cursor: pointer; transition: background 0.2s;
+    cursor: pointer; transition: all 0.2s;
 }
+/* Hot Pink reserved for hover states */
 .btn-primary:hover { background-color: var(--hot-pink); color: var(--cream); }
 
 .btn-secondary {
@@ -39,40 +51,41 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
 }
 .btn-secondary:hover { background-color: var(--coral-pink); color: var(--obsidian); }
 
-/* --- HEADER & NAV --- */
+/* --- HEADERS & NAV --- */
 .main-header, .live-header, .docs-header {
     padding: 20px 40px; display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 1px solid var(--graphite);
+    border-bottom: 1px solid var(--slate);
 }
-.docs-header { border-bottom: 1px solid var(--warm-gray); }
 .logo-text { font-size: 1.5rem; font-weight: 700; }
 .nav-link { color: var(--cream); text-decoration: none; margin-left: 20px; font-weight: 500; }
-.nav-link:hover { color: var(--hot-pink); }
+.nav-link:hover { color: var(--hot-pink); } /* Hot pink for hover */
 .premium-link { color: var(--coral-pink); font-weight: 600; }
-.back-link { color: var(--obsidian); text-decoration: none; font-weight: 600; }
 
 /* --- INDEX.HTML (LANDING) STYLES --- */
-.hero-section { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
-.hero-content { text-align: center; max-width: 600px; margin-bottom: 40px; }
+.hero-section { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; gap: 40px; }
+.hero-content { text-align: center; max-width: 600px; }
 .hero-headline { font-size: 2.5rem; margin-bottom: 15px; }
 .hero-subtext { font-size: 1.1rem; color: var(--warm-gray); margin-bottom: 30px; }
 
+/* Mid-tone card pairing */
 .room-creator-card {
     padding: 30px; border-radius: 16px; text-align: left;
-    border: 1px solid var(--graphite); max-width: 500px; width: 100%;
+    border: 1px solid var(--slate); max-width: 500px; width: 100%; margin: 0 auto;
 }
-.room-creator-card h3 { margin-bottom: 20px; }
+.room-creator-card h3 { margin-bottom: 20px; color: var(--cream); }
 .input-group { display: flex; gap: 10px; margin-bottom: 15px; }
 .input-group input {
     flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--warm-gray);
     background: var(--obsidian); color: var(--cream); font-size: 1rem;
 }
+.input-group input::placeholder { color: var(--stone); }
 .helper-text { font-size: 0.85rem; color: var(--warm-gray); }
 
-/* Premium Banner using Tint 50 (Blush subtle) */
+/* Blush subtle pairing for premium banner */
 .premium-banner {
     background-color: var(--tint-50); color: var(--obsidian);
     padding: 30px; border-radius: 16px; max-width: 500px; width: 100%; text-align: center;
+    border: 1px solid var(--tint-200);
 }
 .premium-banner h4 { color: var(--shade-600); margin-bottom: 10px; font-size: 1.2rem; }
 .premium-banner p { margin-bottom: 20px; color: var(--graphite); }
@@ -90,7 +103,7 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
     position: relative; width: 400px; height: 250px; background-color: var(--graphite);
     border-radius: 12px; overflow: hidden; border: 2px solid transparent; transition: border-color 0.3s;
 }
-.video-tile:hover { border-color: var(--hot-pink); }
+.video-tile:hover { border-color: var(--hot-pink); } /* Hot pink hover */
 .video-tile video { width: 100%; height: 100%; object-fit: cover; }
 .participant-name {
     position: absolute; bottom: 10px; left: 10px; background: rgba(10,10,10,0.8);
@@ -99,20 +112,20 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
 
 .control-bar {
     padding: 20px; display: flex; justify-content: center; gap: 20px;
-    border-top: 1px solid var(--graphite);
+    border-top: 1px solid var(--slate);
 }
 .control-btn {
     width: 60px; height: 60px; border-radius: 50%; border: none; font-size: 1.5rem;
-    cursor: pointer; background-color: var(--graphite); color: var(--cream); transition: all 0.2s;
+    cursor: pointer; background-color: var(--slate); color: var(--cream); transition: all 0.2s;
 }
 .control-btn.active { background-color: var(--coral-pink); color: var(--obsidian); }
 .control-btn:hover { background-color: var(--hot-pink); color: var(--cream); transform: scale(1.05); }
 .leave-btn { background-color: var(--shade-600); }
 
-/* Modal for Paywall */
+/* --- MODALS (PAYWALLS) --- */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(10,10,10,0.85); display: flex; justify-content: center; align-items: center;
+    background: rgba(10,10,10,0.9); display: flex; justify-content: center; align-items: center;
     z-index: 1000;
 }
 .modal-overlay.hidden { display: none; }
@@ -124,15 +137,7 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
 .modal-content p { margin-bottom: 25px; color: var(--warm-gray); }
 .modal-content button { margin: 5px; }
 
-/* --- DOCS.HTML STYLES --- */
-.docs-content { flex: 1; padding: 40px; max-width: 800px; margin: 0 auto; }
-.doc-section { margin-bottom: 40px; }
-.doc-section h2 { margin-bottom: 20px; font-size: 1.8rem; }
-.doc-section h3 { margin: 20px 0 10px; color: var(--shade-600); }
-.doc-section p, .doc-section li { line-height: 1.6; margin-bottom: 10px; }
-.doc-section code { background: var(--obsidian); color: var(--coral-pink); padding: 2px 6px; border-radius: 4px; }
-.code-block {
-    background: var(--obsidian); color: var(--cream); padding: 20px; border-radius: 8px;
-    overflow-x: auto; border-left: 4px solid var(--coral-pink); margin: 15px 0;
+/* Specific override for the urgent 20-person limit modal */
+#capacity-modal .modal-content {
+    border: 2px solid var(--hot-pink); /* Hot pink for urgent attention */
 }
-.code-block code { background: transparent; color: var(--cream); font-size: 0.9rem; }
