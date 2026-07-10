@@ -4,8 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parsing™ Live - Secure Video Conferencing</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <!-- FAVICON PLACEHOLDER: Replace 'YOUR_FAVICON.ico' with your actual file name -->
+    <link rel="icon" type="image/x-icon" href="YOUR_FAVICON.ico">
+    
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Paystack Inline JS (Required for frontend payments) -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
 </head>
 <body class="obsidian-bg cream-text">
 
@@ -13,30 +19,35 @@
         <h1 class="logo-text">Parsing<span class="coral-pink-text">™</span> Live</h1>
         <nav>
             <a href="docs.html" class="nav-link">Documentation</a>
-            <a href="#" class="nav-link premium-link">Go Premium</a>
+            <a href="#" class="nav-link premium-link" id="nav-premium-btn">Go Premium</a>
         </nav>
     </header>
 
     <main class="hero-section">
         <div class="hero-content">
+            <!-- Hero Dark Pairing: Coral headline on Obsidian -->
             <h2 class="hero-headline">Enterprise-grade video, <span class="coral-pink-text">simplified.</span></h2>
-            <p class="hero-subtext">Start a secure room instantly. Free for 1 hour. No downloads required.</p>
+            <p class="hero-subtext">Start a secure room instantly. Free for 1 hour & up to 20 people. No downloads required.</p>
             
+            <!-- Mid-tone Card Pairing: Graphite card inside dark layout -->
             <div class="room-creator-card graphite-bg">
-                <h3>Start a new room</h3>
+                <h3>Join or Create a Room</h3>
                 <div class="input-group">
-                    <input type="text" id="room-name-input" placeholder="e.g., weekly-sync or leave blank for random" class="cream-text">
+                    <input type="email" id="user-email-input" placeholder="Your email address" class="cream-text">
+                </div>
+                <div class="input-group">
+                    <input type="text" id="room-name-input" placeholder="Room name (or leave blank for random)" class="cream-text">
                     <button id="start-room-btn" class="btn-primary">Start Room</button>
                 </div>
-                <p class="helper-text">Or join an existing room by entering its name above and clicking Start.</p>
+                <p class="helper-text">Your email is used to check your Premium status.</p>
             </div>
         </div>
 
-        <!-- Premium Upsell Banner using Pink Ramp Tint 50 -->
+        <!-- Blush Subtle Pairing: Tint 50 for info banners -->
         <div class="premium-banner">
-            <h4>Need more than 1 hour?</h4>
-            <p>Upgrade to Parsing™ Live Premium for unlimited meeting durations, HD streaming, and custom branding.</p>
-            <button class="btn-secondary">View Premium Plans</button>
+            <h4>Need more than 20 people?</h4>
+            <p>Upgrade to Parsing™ Live Premium for R299/month. Unlimited capacity, no time limits, and priority support.</p>
+            <button id="show-paystack-btn" class="btn-secondary">Upgrade to Premium</button>
         </div>
     </main>
 
