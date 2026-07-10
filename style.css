@@ -13,6 +13,23 @@
     --slate: #303030;
     --glass: rgba(10, 10, 10, 0.85);
 }
+/* --- FIX: Universal selector was missing the * --- */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+
+/* --- NEW: Logo icon styling (replaces text) --- */
+.logo-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+.logo-icon:hover {
+    transform: scale(1.1) rotate(-5deg);
+}
+
+/* Keep the rest of your existing CSS exactly as-is */
 
 /* --- BASE & UTILITIES --- */
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
