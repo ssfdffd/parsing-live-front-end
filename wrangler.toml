@@ -26,7 +26,7 @@ new_classes = ["RoomSignaling"]
 
 # Environment variables
 [vars]
-PAYSTACK_SECRET_KEY = "your_paystack_secret_key"
+PAYSTACK_SECRET_KEY = "sk_test_888987b02db0069f5dc3535176bb6df623c94bf8"
 
 # Durable Object class
 [durable_objects.classes.RoomSignaling]
