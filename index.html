@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parsing™ Live - Secure Video Conferencing</title>
-    
     <!-- FAVICON PLACEHOLDER: Replace 'YOUR_FAVICON.ico' with your actual file name -->
     <link rel="icon" type="image/x-icon" href="YOUR_FAVICON.ico">
-    
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Paystack Inline JS (Required for frontend payments) -->
     <script src="https://js.paystack.co/v1/inline.js"></script>
 </head>
 <body class="obsidian-bg cream-text">
@@ -25,11 +21,9 @@
 
     <main class="hero-section">
         <div class="hero-content">
-            <!-- Hero Dark Pairing: Coral headline on Obsidian -->
             <h2 class="hero-headline">Enterprise-grade video, <span class="coral-pink-text">simplified.</span></h2>
             <p class="hero-subtext">Start a secure room instantly. Free for 1 hour & up to 20 people. No downloads required.</p>
             
-            <!-- Mid-tone Card Pairing: Graphite card inside dark layout -->
             <div class="room-creator-card graphite-bg">
                 <h3>Join or Create a Room</h3>
                 <div class="input-group">
@@ -39,17 +33,35 @@
                     <input type="text" id="room-name-input" placeholder="Room name (or leave blank for random)" class="cream-text">
                     <button id="start-room-btn" class="btn-primary">Start Room</button>
                 </div>
-                <p class="helper-text">Your email is used to check your Premium status.</p>
             </div>
         </div>
 
-        <!-- Blush Subtle Pairing: Tint 50 for info banners -->
         <div class="premium-banner">
             <h4>Need more than 20 people?</h4>
             <p>Upgrade to Parsing™ Live Premium for R299/month. Unlimited capacity, no time limits, and priority support.</p>
             <button id="show-paystack-btn" class="btn-secondary">Upgrade to Premium</button>
         </div>
     </main>
+
+    <!-- PREMIUM ACCOUNT DETAILS MODAL -->
+    <div id="premium-modal" class="modal-overlay hidden">
+        <div class="modal-content graphite-bg premium-modal-specific">
+            <button class="modal-close-btn" id="close-premium-modal">&times;</button>
+            <h2 class="coral-pink-text">Upgrade to Premium</h2>
+            <p class="modal-price">R299 <span>/month</span></p>
+            <ul class="premium-features">
+                <li>✓ Unlimited meeting duration</li>
+                <li>✓ Host 100+ participants</li>
+                <li>✓ HD Video & Priority Support</li>
+            </ul>
+            <form id="premium-details-form" class="premium-form">
+                <input type="text" id="premium-name" placeholder="Full Name / Company Name" required class="cream-text">
+                <input type="email" id="premium-email" placeholder="Billing Email Address" required class="cream-text">
+                <button type="submit" class="btn-primary full-width">Proceed to Secure Payment</button>
+            </form>
+            <p class="secure-text">Secured by Paystack. Cancel anytime.</p>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
