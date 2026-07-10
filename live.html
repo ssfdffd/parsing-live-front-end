@@ -4,55 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parsing™ Live - Room</title>
-    
     <!-- FAVICON PLACEHOLDER: Replace 'YOUR_FAVICON.ico' with your actual file name -->
     <link rel="icon" type="image/x-icon" href="YOUR_FAVICON.ico">
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="obsidian-bg cream-text">
 
     <header class="live-header">
         <h1 class="logo-text">Parsing<span class="coral-pink-text">™</span> Live</h1>
-        <div class="timer-container">
-            <span class="timer-label">Time Remaining:</span>
-            <span id="countdown-timer" class="timer-value">60:00</span>
+        <div class="header-actions">
+            <div class="timer-container">
+                <span class="timer-label">Time:</span>
+                <span id="countdown-timer" class="timer-value">60:00</span>
+            </div>
+            <button id="share-room-btn" class="btn-share" title="Copy Room Link">🔗 Share</button>
         </div>
     </header>
 
-    <main class="video-grid-container">
-        <div class="video-tile" id="local-video-tile">
-            <video id="local-video" autoplay muted playsinline></video>
-            <span class="participant-name">You</span>
-        </div>
-        <div id="remote-videos-container"></div>
-    </main>
+    <!-- MAIN ROOM LAYOUT: Video Grid + Chat Panel -->
+    <div class="room-layout">
+        
+        <!-- LEFT: VIDEO SECTION -->
+        <section class="video-section">
+            <main class="video-grid-container">
+                <!-- Local Video Tile -->
+                <div class="video-tile" id="local-video-tile">
+                    <video id="local-video" autoplay muted playsinline></video>
+                    <!-- Camera Off Indicator (Hidden by default) -->
+                    <div class="camera-off-indicator hidden">
+                        <span class="icon-large">📷</span>
+                        <span class="icon-slash"></span>
+                    </div>
+                    <!-- Hand Raised Indicator (Hidden by default) -->
+                    <div class="hand-raised-indicator hidden">✋</div>
+                    <span class="participant-name">You</span>
+                </div>
+                
+                <!-- Remote Videos Container -->
+                <div id="remote-videos-container"></div>
+            </main>
 
-    <footer class="control-bar graphite-bg">
-        <button id="btn-mic" class="control-btn active" title="Toggle Mic">🎤</button>
-        <button id="btn-cam" class="control-btn active" title="Toggle Cam">📹</button>
-        <button id="btn-leave" class="control-btn leave-btn" title="Leave">📞</button>
-    </footer>
+            <!-- CONTROL BAR -->
+            <footer class="control-bar graphite-bg">
+                <button id="btn-mic" class="control-btn active" title="Toggle Mic">🎤</button>
+                <button id="btn-cam" class="control-btn active" title="Toggle Cam">📹</button>
+                <button id="btn-hand" class="control-btn" title="Raise Hand">✋</button>
+                <button id="btn-chat-toggle" class="control-btn" title="Toggle Chat">💬</button>
+                <button id="btn-leave" class="control-btn leave-btn" title="Leave">📞</button>
+            </footer>
+        </section>
 
-    <!-- 1-Hour Timeout Paywall Modal -->
-    <div id="premium-modal" class="modal-overlay hidden">
+        <!-- RIGHT: CHAT SECTION -->
+        <aside class="chat-section hidden" id="chat-panel">
+            <div class="chat-header">
+                <h3>Room Chat</h3>
+                <button id="close-chat-btn" class="chat-close-btn">&times;</button>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="chat-message system-msg">Welcome to Parsing™ Live. Chat is secure.</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Type a message..." class="cream-text">
+                <button id="send-chat-btn" class="btn-send">➤</button>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- MODALS -->
+    <!-- Join Prompt (For shared links) -->
+    <div id="join-prompt-modal" class="modal-overlay hidden">
         <div class="modal-content graphite-bg">
-            <h2 class="coral-pink-text">Time's Up!</h2>
-            <p>Your 1-hour free session has ended. To continue this meeting or start unlimited sessions, please upgrade to Parsing™ Live Premium.</p>
-            <button class="btn-primary" onclick="window.location.href='index.html'">Upgrade to Premium</button>
-            <button class="btn-secondary" onclick="window.location.href='index.html'">Return to Home</button>
+            <h2 class="coral-pink-text">Join Room</h2>
+            <p>Enter your details to join this secure session.</p>
+            <form id="join-room-form" class="premium-form">
+                <input type="text" id="join-name" placeholder="Your Display Name" required class="cream-text">
+                <input type="email" id="join-email" placeholder="Your Email" required class="cream-text">
+                <button type="submit" class="btn-primary full-width">Join Meeting</button>
+            </form>
         </div>
     </div>
 
-    <!-- 20-Person Capacity Paywall Modal -->
+    <!-- 20-Person Capacity Paywall -->
     <div id="capacity-modal" class="modal-overlay hidden">
         <div class="modal-content graphite-bg">
             <h2 class="hot-pink-text">Room at Capacity</h2>
-            <p>This room has reached the 20-person free limit. To join this meeting or host larger rooms, please upgrade to Parsing™ Live Premium.</p>
-            <button class="btn-primary" onclick="window.location.href='index.html'">Upgrade for R299/mo</button>
-            <button class="btn-secondary" onclick="window.location.href='index.html'">Return Home</button>
+            <p>This room has reached the 20-person free limit. Upgrade to Premium to join or host larger rooms.</p>
+            <button class="btn-primary" id="upgrade-from-capacity-btn">Upgrade for R299/mo</button>
         </div>
     </div>
+
+    <!-- 1-Hour Timeout Paywall -->
+    <div id="timeout-modal" class="modal-overlay hidden">
+        <div class="modal-content graphite-bg">
+            <h2 class="coral-pink-text">Time's Up!</h2>
+            <p>Your 1-hour free session has ended. Upgrade to Premium for unlimited time.</p>
+            <button class="btn-primary" id="upgrade-from-timeout-btn">Upgrade to Premium</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-notification" class="toast hidden">Link copied to clipboard!</div>
 
     <script src="script.js"></script>
 </body>
