@@ -1,19 +1,33 @@
 name = "parsing-live-backend"
 main = "src/index.js"
-compatibility_date = "2026-07-01"
+compatibility_date = "2026-07-10"
 
-# Bind the Durable Object class
-[durable_objects]
+# Durable Objects for WebRTC signaling
+[[durable_objects]]
 bindings = [
-  { name = "ROOM", class_name = "Room" }
+  { name = "ROOM_SIGNALING", class_name = "RoomSignaling" }
 ]
 
+# D1 Database
 [[d1_databases]]
 binding = "DB"
 database_name = "parsing-live-db"
-database_id = "a6efd92a-5cd0-4d65-8083-746bc6a06d74" 
+database_id = "a6efd92a-5cd0-4d65-8083-746bc6a06d74"
 
-# Required for the first deployment of a Durable Object
+# KV for room state
+[[kv_namespaces]]
+binding = "ROOM_STATE"
+id = "room-state-kv"
+
+# Migrations
 [[migrations]]
-tag = "v1" 
-new_classes = ["Room"]
+tag = "v1"
+new_classes = ["RoomSignaling"]
+
+# Environment variables
+[vars]
+PAYSTACK_SECRET_KEY = "your_paystack_secret_key"
+
+# Durable Object class
+[durable_objects.classes.RoomSignaling]
+# WebRTC signaling implementation
