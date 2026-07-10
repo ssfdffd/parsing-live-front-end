@@ -8,6 +8,11 @@ bindings = [
   { name = "ROOM", class_name = "Room" }
 ]
 
+[[d1_databases]]
+binding = "DB"
+database_name = "parsing-live-db"
+database_id = "a6efd92a-5cd0-4d65-8083-746bc6a06d74" 
+
 # Required for the first deployment of a Durable Object
 [[migrations]]
 tag = "v1" 
