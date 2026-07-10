@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parsing™ Live - Premium Portal</title>
+    <link rel="icon" type="image/x-icon" href="YOUR_FAVICON.ico">
+    <link rel="stylesheet" href="portal.css">
+</head>
+<body class="obsidian-bg cream-text">
+
+    <header class="portal-header">
+        <h1 class="logo-text">Parsing<span class="coral-pink-text">™</span> Live <span class="premium-badge">PREMIUM</span></h1>
+        <div class="user-info">
+            <span id="user-email-display">Loading...</span>
+            <button id="logout-btn" class="btn-logout">Logout</button>
+        </div>
+    </header>
+
+    <main class="portal-container" id="portal-dashboard" style="display:none;">
+        
+        <!-- Create Room Section -->
+        <section class="dashboard-card create-room-card">
+            <h2>Create Unlimited Meeting</h2>
+            <p>Generate a permanent, shareable link for your team. No time limits, no 20-person caps.</p>
+            <div class="input-row">
+                <input type="text" id="new-room-name" placeholder="e.g., weekly-board-meeting">
+                <button id="create-room-btn" class="btn-primary">Generate Link</button>
+            </div>
+            <div id="generated-link-container" class="hidden">
+                <label>Your Shareable Link:</label>
+                <div class="link-box">
+                    <input type="text" id="generated-link" readonly>
+                    <button id="copy-link-btn" class="btn-copy">Copy</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Account Status Section -->
+        <section class="dashboard-card status-card">
+            <h2>Account Status</h2>
+            <div class="status-grid">
+                <div class="status-item">
+                    <span class="status-label">Plan</span>
+                    <span class="status-value premium-text">Premium (R299/mo)</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Participants Limit</span>
+                    <span class="status-value">Unlimited</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Meeting Duration</span>
+                    <span class="status-value">Unlimited</span>
+                </div>
+            </div>
+            <button class="btn-secondary" onclick="window.location.href='https://checkout.paystack.com'">Manage Billing (Paystack)</button>
+        </section>
+
+    </main>
+
+    <!-- Login/Unauthorized State -->
+    <main class="portal-container" id="portal-login">
+        <div class="dashboard-card" style="text-align:center;">
+            <h2>Access Denied</h2>
+            <p>You must be a Premium member to access this portal.</p>
+            <button class="btn-primary" onclick="window.location.href='premium.html'">Upgrade to Premium</button>
+        </div>
+    </main>
+
+    <script src="portal.js"></script>
+</body>
+</html>
