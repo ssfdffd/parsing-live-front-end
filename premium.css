@@ -1,0 +1,39 @@
+/* --- LIGHT PAGE PAIRING (Cream BG, Obsidian Text) --- */
+:root {
+    --obsidian: #0A0A0A; --graphite: #404040; --hot-pink: #F05090;
+    --coral-pink: #F07080; --cream: #F0F0E0; --warm-gray: #8A8A80; --stone: #606058;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+body { min-height: 100vh; background-color: var(--cream); color: var(--obsidian); }
+
+.premium-header { padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--stone); }
+.back-link { color: var(--obsidian); text-decoration: none; font-weight: 600; }
+.back-link:hover { color: var(--coral-pink); }
+.premium-header h1 { font-size: 1.5rem; font-weight: 700; }
+.coral-pink-text { color: var(--coral-pink); }
+
+.premium-container { max-width: 900px; margin: 60px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+
+/* Pricing Card */
+.pricing-card { background: var(--obsidian); color: var(--cream); padding: 40px; border-radius: 16px; text-align: center; position: relative; }
+.plan-badge { background: var(--coral-pink); color: var(--obsidian); display: inline-block; padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 20px; }
+.pricing-card h2 { font-size: 1.8rem; margin-bottom: 15px; }
+.price { font-size: 3rem; font-weight: 800; color: var(--coral-pink); margin: 20px 0; }
+.price span { font-size: 1rem; color: var(--warm-gray); font-weight: 400; }
+.features-list { list-style: none; text-align: left; margin-top: 30px; }
+.features-list li { padding: 10px 0; border-bottom: 1px solid var(--graphite); color: var(--cream); font-size: 0.95rem; }
+
+/* Checkout Card */
+.checkout-card { background: white; padding: 40px; border-radius: 16px; border: 2px solid var(--stone); box-shadow: 0 10px 30px rgba(10,10,10,0.05); }
+.checkout-card h3 { font-size: 1.5rem; margin-bottom: 5px; }
+.secure-subtext { color: var(--warm-gray); margin-bottom: 30px; font-size: 0.9rem; }
+.form-group { margin-bottom: 20px; text-align: left; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; }
+.form-group input { width: 100%; padding: 14px; border: 2px solid var(--stone); border-radius: 8px; font-size: 1rem; background: var(--cream); color: var(--obsidian); transition: border 0.2s; }
+.form-group input:focus { outline: none; border-color: var(--coral-pink); }
+
+.btn-pay { width: 100%; padding: 16px; background: var(--coral-pink); color: var(--obsidian); border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 10px; }
+.btn-pay:hover { background: var(--hot-pink); color: var(--cream); transform: translateY(-2px); }
+.guarantee-text { text-align: center; margin-top: 20px; font-size: 0.8rem; color: var(--warm-gray); }
+
+@media (max-width: 768px) { .premium-container { grid-template-columns: 1fr; } }
