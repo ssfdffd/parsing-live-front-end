@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parsing™ Live - Upgrade to Premium</title>
+    <link rel="icon" type="image/x-icon" href="YOUR_FAVICON.ico">
+    <link rel="stylesheet" href="premium.css">
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+</head>
+<body class="cream-bg obsidian-text">
+    <header class="premium-header">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        <h1>Parsing<span class="coral-pink-text">™</span> Live</h1>
+    </header>
+
+    <main class="premium-container">
+        <div class="pricing-card">
+            <div class="plan-badge">PREMIUM PLAN</div>
+            <h2>Unlimited WebRTC Power</h2>
+            <p class="price">R299 <span>/month</span></p>
+            <ul class="features-list">
+                <li>✓ Unlimited meeting duration</li>
+                <li>✓ Host up to 100+ participants</li>
+                <li>✓ Dedicated Portal Dashboard</li>
+                <li>✓ Create & manage custom room links</li>
+                <li>✓ Priority South African Support</li>
+            </ul>
+        </div>
+
+        <div class="checkout-card">
+            <h3>Secure Checkout</h3>
+            <p class="secure-subtext">Processed securely via Paystack. Cancel anytime.</p>
+            
+            <form id="premium-checkout-form">
+                <div class="form-group">
+                    <label>Full Name / Company Name</label>
+                    <input type="text" id="checkout-name" placeholder="e.g. Parsing Enterprises" required>
+                </div>
+                <div class="form-group">
+                    <label>Billing Email Address</label>
+                    <input type="email" id="checkout-email" placeholder="you@company.co.za" required>
+                </div>
+                <button type="submit" class="btn-pay">Activate Premium - R299</button>
+            </form>
+            <p class="guarantee-text">🔒 256-bit SSL Encrypted. South African Rand (ZAR) billing.</p>
+        </div>
+    </main>
+
+    <script src="premium.js"></script>
+</body>
+</html>
