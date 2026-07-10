@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parsing™ Live - Room</title>
+    
     <!-- FAVICON PLACEHOLDER: Replace 'YOUR_FAVICON.ico' with your actual file name -->
     <link rel="icon" type="image/x-icon" href="YOUR_FAVICON.ico">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="obsidian-bg cream-text">
@@ -32,13 +34,23 @@
         <button id="btn-leave" class="control-btn leave-btn" title="Leave">📞</button>
     </footer>
 
-    <!-- Premium Paywall Modal (Hidden by default) -->
+    <!-- 1-Hour Timeout Paywall Modal -->
     <div id="premium-modal" class="modal-overlay hidden">
         <div class="modal-content graphite-bg">
             <h2 class="coral-pink-text">Time's Up!</h2>
             <p>Your 1-hour free session has ended. To continue this meeting or start unlimited sessions, please upgrade to Parsing™ Live Premium.</p>
             <button class="btn-primary" onclick="window.location.href='index.html'">Upgrade to Premium</button>
             <button class="btn-secondary" onclick="window.location.href='index.html'">Return to Home</button>
+        </div>
+    </div>
+
+    <!-- 20-Person Capacity Paywall Modal -->
+    <div id="capacity-modal" class="modal-overlay hidden">
+        <div class="modal-content graphite-bg">
+            <h2 class="hot-pink-text">Room at Capacity</h2>
+            <p>This room has reached the 20-person free limit. To join this meeting or host larger rooms, please upgrade to Parsing™ Live Premium.</p>
+            <button class="btn-primary" onclick="window.location.href='index.html'">Upgrade for R299/mo</button>
+            <button class="btn-secondary" onclick="window.location.href='index.html'">Return Home</button>
         </div>
     </div>
 
