@@ -1,0 +1,48 @@
+/* --- DARK PAGE & MID-TONE CARD PAIRINGS --- */
+:root {
+    --obsidian: #0A0A0A; --graphite: #404040; --hot-pink: #F05090;
+    --coral-pink: #F07080; --cream: #F0F0E0; --warm-gray: #8A8A80; --slate: #303030;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+body { min-height: 100vh; background-color: var(--obsidian); color: var(--cream); }
+
+.portal-header { padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--slate); background: var(--obsidian); }
+.logo-text { font-size: 1.5rem; font-weight: 700; }
+.premium-badge { background: var(--coral-pink); color: var(--obsidian); font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; vertical-align: middle; margin-left: 10px; }
+.user-info { display: flex; align-items: center; gap: 15px; color: var(--warm-gray); }
+.btn-logout { background: transparent; border: 1px solid var(--warm-gray); color: var(--warm-gray); padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+.btn-logout:hover { border-color: var(--hot-pink); color: var(--hot-pink); }
+
+.portal-container { max-width: 1000px; margin: 40px auto; padding: 0 20px; display: flex; flex-direction: column; gap: 30px; }
+
+/* Mid-tone Card Pairing */
+.dashboard-card { background: var(--graphite); padding: 30px; border-radius: 16px; border: 1px solid var(--slate); }
+.dashboard-card h2 { color: var(--coral-pink); margin-bottom: 10px; font-size: 1.4rem; }
+.dashboard-card p { color: var(--warm-gray); margin-bottom: 20px; }
+
+/* Create Room */
+.input-row { display: flex; gap: 15px; margin-bottom: 20px; }
+.input-row input { flex: 1; padding: 14px; border-radius: 8px; border: 1px solid var(--warm-gray); background: var(--obsidian); color: var(--cream); font-size: 1rem; }
+.btn-primary { background: var(--coral-pink); color: var(--obsidian); border: none; padding: 14px 28px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.btn-primary:hover { background: var(--hot-pink); color: var(--cream); }
+
+.link-box { display: flex; gap: 10px; margin-top: 10px; }
+.link-box input { flex: 1; padding: 12px; background: var(--obsidian); border: 1px solid var(--coral-pink); color: var(--coral-pink); border-radius: 8px; font-family: monospace; }
+.btn-copy { background: var(--slate); color: var(--cream); border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+.btn-copy:hover { background: var(--hot-pink); }
+.hidden { display: none !important; }
+
+/* Status Card */
+.status-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 20px 0; }
+.status-item { background: var(--obsidian); padding: 20px; border-radius: 12px; text-align: center; }
+.status-label { display: block; color: var(--warm-gray); font-size: 0.85rem; margin-bottom: 8px; }
+.status-value { display: block; color: var(--cream); font-size: 1.2rem; font-weight: 700; }
+.premium-text { color: var(--coral-pink); }
+
+.btn-secondary { background: transparent; border: 2px solid var(--coral-pink); color: var(--coral-pink); padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.btn-secondary:hover { background: var(--coral-pink); color: var(--obsidian); }
+
+@media (max-width: 768px) { 
+    .input-row { flex-direction: column; } 
+    .status-grid { grid-template-columns: 1fr; } 
+}
